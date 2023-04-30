@@ -1,0 +1,16 @@
+<div class="col-md-100">
+    <div class="border rounded overflow-hidden flex-md-row mb-4 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+            <h1 class="mb-0">{{ poem.title }}</h1>
+            <div class="mb-1 text-muted">{{ poem.name }} {{poem.created_on}}</div>
+            <div>
+                {% for tag in tags[poem.id] %}
+                <span class="col mb-1 text-muted border border-secondary rounded">{{ tag }}</span>
+                {% endfor %}
+            </div>
+            {% autoescape false %}
+            <p class="card-text mb-auto">{{ poem.content }}</p>
+            {% endautoescape %}
+        </div>
+    </div>
+</div>

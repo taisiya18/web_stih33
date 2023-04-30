@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Войти</title>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Войти</h1>
+    {% for cat, msg in get_flashed_messages(True) %}
+    <div class="flash {{cat}}">{{msg}}</div>
+    {% endfor %}
+    <form action="" method="post" class="form-contact">
+        <br>
+        <p><label>Почта: </label> <input type="text" name="email" id="email"><br>
+            <br>
+        <p><label>Пароль: </label> <input type="password" name="password" id="password"><br>
+            <br>
+            <button class="btn btn-success" type="submit">Войти</button>
+            <button class="btn bg-info" type="button" onclick="window.location.href='register';">Зарегистрироваться
+            </button>
+    </form>
+</div>
+{% endblock %}

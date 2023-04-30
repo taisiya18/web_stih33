@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Добавление записи</title>
+
+<script>
+    function addTag() {
+        const input = document.getElementById('cur_tag')
+        const tag = input.value;
+        const form = document.getElementById('main_form');
+        if (!(form.tags instanceof Set)) {
+            form.tags = new Set;
+        }
+        if(tag.length === 0) {
+            return;
+        }
+        form.tags.add(tag.toLowerCase());
+        input.value = '';
+        input.placeholder = 'Тэг';
+        console.log(form.tags);
+        const tag_list = document.getElementById('tag-list');
+        tag_list.innerHTML = '';
+        form.tags.forEach((a) => {
+            let tag_e = document.createElement('span');
+            tag_e.classList.add('col', 'mb-1', 'text-muted', 'border', 'border-secondary', 'rounded', 'text-center', 'mrg');
+            tag_e.textContent = a;
+            tag_list.appendChild(tag_e)
+        })
+    }
+
+    document.addEventListener("DOMContentLoaded", function (event) {
+        const form = document.getElementById('main_form')
+        form.tags = new Set;
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+
+            let data = new FormData(form)
+            data.set('tags', Array.from(form.tags))
+
+            let response = await fetch('/create_new_note', {
+                method: 'POST',
+                body: data
+            });
+
+            await response;
+
+            window.location = response.url;
+        }
+    });
+</script>
+{% endblock %}
+
+{% block body %}
+<div class="container" style="max-width: 800px">
+    <h1>Новое стихотворение</h1>
+    <form id="main_form" method="post">
+        <input type="text" class="form-control" name="title" id="title" placeholder="Название"><br>
+        <div id="tag-list" class="col p-4 flex-row "></div>
+        <br>
+        <div class="input-group">
+            <input type="text" class="form-control" name="cur_tag" id="cur_tag" placeholder="Тэг">
+            <span class="input-group-btn">
+            <button class="btn btn-sm btn-outline-secondary" type="button" onclick="addTag()">
+            <i class="fa fa-search">+</i>
+            </button>
+            </span>
+        </div>
+        <br>
+        <textarea type="text" class="form-control" name="content" id="content"
+                  placeholder="Стихотворение"></textarea><br>
+        <button class="btn btn-success" type="submit">Добавить</button>
+    </form>
+</div>
+{% endblock %}

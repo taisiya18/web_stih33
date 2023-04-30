@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Основная страница</title>
+{% endblock %}
+
+{% block body %}
+<a class="btn btn-outline-primary mb-4" href="/create_new_note">Создать запись</a>
+
+<nav class="blog-pagination" aria-label="Pagination">
+    {% for poem in poems %}
+    {% include 'poem.html' %}
+    {% endfor %}
+</nav>
+{% endblock %}
